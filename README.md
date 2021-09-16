@@ -17,10 +17,12 @@ Grab an Arduino, a servo, a (possibly big and red) button
 and get yourself an AutoBadger! Open source, zero maintenance, 
 gluten free, and ambient friendly!
 
+![Final product](img/main.jpg)
+
 
 ## Demo
 
-Coming soon™
+Check out the demo video on [youtube](https://youtu.be/fu0kCOw-K4I)!
 
 
 ## Shopping list 
