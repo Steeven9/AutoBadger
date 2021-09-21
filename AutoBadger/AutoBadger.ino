@@ -1,21 +1,26 @@
 /**
- * AutoBadger v1.0.0
+ * AutoBadger v1.1.0
  * @author Stefano Taillefert
  * https://github.com/Steeven9/AutoBadger
  */
 
 #include <Servo.h>
 
-Servo servo;
-const int SERVO_PORT = 2;
-const int RELAY_PORT = 3;
-const int BUTTON_PORT = 4;
+#define SERVO_PORT 2
+#define RELAY_PORT 3
+#define BUTTON_PORT 4
 
 //Servo starting angle in degrees
-const int INITIAL_POS = 0;
+#define INITIAL_POS 0
 
 //Strobe blinking interval in ms
-const int STROBE_INTERVAL = 500;
+#define STROBE_INTERVAL 500
+
+//Uncomment to blink manually
+//(switches the relay on and off in intervals)
+//#define MANUAL_BLINK
+
+Servo servo;
 
 void setup() {
   pinMode(RELAY_PORT, OUTPUT);
@@ -26,21 +31,26 @@ void setup() {
   delay(2000);
 }
 
-
 /**
- * Makes the strobe blink for the given duration
+ * Makes the strobe blink for the given duration.
+ * If manual blinking is needed, flashes manually
  * in intervals specified by STROBE_INTERVAL.
  */
 void blink(int interval) {
-  for (int i = 0; i < interval; ++i) {
+  #ifdef MANUAL_BLINK
+    for (int i = 0; i < interval; ++i) {
+      digitalWrite(RELAY_PORT, LOW);  //on
+      delay(STROBE_INTERVAL);
+      digitalWrite(RELAY_PORT, HIGH); //off
+      delay(STROBE_INTERVAL);
+      i = i + 2 * STROBE_INTERVAL;
+    }
+  #else
     digitalWrite(RELAY_PORT, LOW);  //on
-    delay(STROBE_INTERVAL);
+    delay(interval);
     digitalWrite(RELAY_PORT, HIGH); //off
-    delay(STROBE_INTERVAL);
-    i = i + 2 * STROBE_INTERVAL;
-  }
+  #endif
 }
-
 
 void loop() {
   if (digitalRead(BUTTON_PORT) == 1) {

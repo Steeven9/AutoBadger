@@ -34,7 +34,7 @@ A paperclip or a similar mounting solution for the badge\
 [Button](https://www.aliexpress.com/item/1005001496993423.html)\
 [Dupont wires](https://www.aliexpress.com/item/4000203371860.html)\
 (Optional) [relay](https://www.aliexpress.com/item/4000956019162.html) and 
-[strobe light](https://www.aliexpress.com/item/33022456561.html)
+[strobe light](https://www.aliexpress.com/item/33026259989.html)
 
 
 ## Code
@@ -42,8 +42,9 @@ A paperclip or a similar mounting solution for the badge\
 Just open the `AutoBadger.ino` file with the Arduino IDE,
 adjust ports or timeouts if needed and upload it to the board!
 
-Note: depending on your strobe model you might have to adjust the
-behaviour of the `blink()` function.
+Note: depending on your strobe model you might have to enable `MANUAL_BLINK`
+to manually make the light flash. It's a bit more noisy (relay clicking) so I would
+suggest to get a strobe that flashes by itself.
 
 
 ## Schematic and assembly
