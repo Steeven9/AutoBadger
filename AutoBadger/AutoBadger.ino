@@ -28,36 +28,37 @@ void setup() {
   servo.attach(SERVO_PORT);
   digitalWrite(RELAY_PORT, HIGH); //default is off
   servo.write(INITIAL_POS); //start position - up
-  delay(2000);
+  delay(1000);
 }
 
 /**
- * Makes the strobe blink for the given duration.
- * If manual blinking is needed, flashes manually
- * in intervals specified by STROBE_INTERVAL.
+ * Makes the strobe manually blink for the given duration.
  */
-void blink(int interval) {
-  #ifdef MANUAL_BLINK
-    for (int i = 0; i < interval; ++i) {
-      digitalWrite(RELAY_PORT, LOW);  //on
-      delay(STROBE_INTERVAL);
-      digitalWrite(RELAY_PORT, HIGH); //off
-      delay(STROBE_INTERVAL);
-      i = i + 2 * STROBE_INTERVAL;
-    }
-  #else
+void manualBlink(int interval) {
+  for (int i = 0; i < interval; ++i) {
     digitalWrite(RELAY_PORT, LOW);  //on
-    delay(interval);
+    delay(STROBE_INTERVAL);
     digitalWrite(RELAY_PORT, HIGH); //off
-  #endif
+    delay(STROBE_INTERVAL);
+    i = i + 2 * STROBE_INTERVAL;
+  }
 }
 
 void loop() {
   if (digitalRead(BUTTON_PORT) == 1) {
-    servo.write(INITIAL_POS + 180);
-    blink(3000);
-    servo.write(INITIAL_POS);
-    blink(2000);
+    #ifdef MANUAL_BLINK
+      servo.write(INITIAL_POS + 180);
+      manualBlink(1500);
+      servo.write(INITIAL_POS);
+      manualBlink(500);
+    #else
+      digitalWrite(RELAY_PORT, LOW);  //on
+      servo.write(INITIAL_POS + 180);
+      delay(1500);
+      servo.write(INITIAL_POS);
+      delay(500);
+      digitalWrite(RELAY_PORT, HIGH);  //off
+    #endif
     delay(1000);
   }
 }
